@@ -5,6 +5,6 @@
     <title>Insert title here</title>
 </head>
 <body>
-hello 11111111111111111111111111 ${index}
+hello ${hello}
 </body>
 </html>
