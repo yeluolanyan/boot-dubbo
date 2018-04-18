@@ -3,6 +3,7 @@ package com.wu.controller;
 import com.wu.model.User;
 import com.wu.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -26,11 +27,16 @@ public class UserController {
     private UserService userService;
 
 
-
-
     @ApiOperation("用户信息查询接口")
     @RequestMapping(value = "queryByName",method = {RequestMethod.GET,RequestMethod.POST})
     public List<User> queryByName(@ApiParam(value = "用户名")@RequestParam String userName){
         return userService.queryUserByName(userName);
+    }
+
+
+    @ApiOperation("用户新增接口")
+    @RequestMapping(value = "saveUser",method = RequestMethod.POST)
+    public Object queryByName(@RequestBody User user){
+        return userService.saveUser(user);
     }
 }

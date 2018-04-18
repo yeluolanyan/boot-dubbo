@@ -11,4 +11,6 @@ public interface UserService {
     List<User> queryAllUser();
 
     List<User> queryUserByName(String username);
+
+    Integer saveUser(User user);
 }

@@ -1,12 +1,17 @@
 package com.wu.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
+@ApiModel(value="user对象",description="用户对象user")
 public class User implements Serializable {
+    @ApiModelProperty(value="id",hidden=true)
     private Integer id;
-
+    @ApiModelProperty(value="用户名",name="userName",example="xingguo")
     private String userName;
-
+    @ApiModelProperty(value="密码",name="password",required=true)
     private String password;
 
     private Integer age;

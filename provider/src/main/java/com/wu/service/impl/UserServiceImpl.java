@@ -6,6 +6,9 @@ import com.wu.model.UserExample;
 import com.wu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,5 +31,12 @@ public class UserServiceImpl implements UserService{
         UserExample example = new UserExample();
         example.or().andUserNameEqualTo(username);
         return userMapper.selectByExample(example);
+    }
+
+    //事务配置Propagation 事务传播行为，isolation 事务隔离级别设置，timeout 事务超时时间设置,rollbackFor 导致事务回滚的异常类数组
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+    public Integer saveUser(User user){
+        return userMapper.insert(user);
     }
 }
