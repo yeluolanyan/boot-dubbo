@@ -4,7 +4,8 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
     <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
     <logger name="org.springframework.web" level="INFO"/>
-
+    <!--级别包括：TRACE、DEBUG、INFO、WARN 和 ERROR-->
+    <!-- 控制台设置 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
@@ -14,186 +15,60 @@
         </encoder>
     </appender>
 
+    <!--只记录Error级别的日志-->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./logs/%d{yyyy-MM-dd}/TestConsole.%i.log</fileNamePattern>
+            <!-- 文件名称 -->
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}/BootConsole_error.%i.log</fileNamePattern>
             <maxHistory>1</maxHistory>
             <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-            <!--<maxFileSize>50MB</maxFileSize>-->
-            <!--<maxHistory>1</maxHistory>-->
-        <!--</triggeringPolicy>-->
         <encoder>
+            <!--日志输出格式 ：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
+        <!--日志等级-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
-
-    <!-- 日志分类-->
-    <appender name="AuditAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- INFO 记录大于等于INFO级别的日志-->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/audit.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <!-- 文件名称 -->
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}/BootConsole_info.%i.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
             <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
         <encoder>
+            <!--日志输出格式-->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="CardAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/card.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
 
-    <appender name="ContractAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/contract.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="ExtraAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/extra.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
+    <!-- 日志分类 不同的类打印不同的日志文件方便查找-->
+    <!--用户日志-->
     <appender name="UserAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/user.%i.log</fileNamePattern>
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}/user.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
-
-    <appender name="OrderAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--订单日志-->
+    <appender name="TestAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/order.%i.log</fileNamePattern>
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}/test.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <maxFileSize>50MB</maxFileSize>
         </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="RepaymentAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/repayment.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="TaskAuditAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/task-audit.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="TaskContractAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/task-contract.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="ResponseAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/360response.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="PushAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/asyncPush.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <appender name="GoodsOrderAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>./log/%d{yyyy-MM-dd}/goodsOrder.%i.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-            <maxFileSize>50MB</maxFileSize>
-        </rollingPolicy>
-        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-        <!--<maxFileSize>40MB</maxFileSize>-->
-        <!--</triggeringPolicy>-->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
@@ -203,53 +78,20 @@
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ERROR"/>
+        <appender-ref ref="INFO"/>
     </root>
+
+    <!-- 所有日志中添加ref="INFO" 把所有日志归集到info文件中 方便开发查看 -->
     <logger name="user" level="INFO" additivity="false">
         <appender-ref ref="UserAppender"/>
+        <appender-ref ref="INFO"/>
     </logger>
 
-    <logger name="order" level="INFO" additivity="false">
-        <appender-ref ref="OrderAppender"/>
+    <logger name="test" level="INFO" additivity="false">
+        <appender-ref ref="TestAppender"/>
+        <appender-ref ref="INFO"/>
     </logger>
 
-    <logger name="audit" level="INFO" additivity="false">
-        <appender-ref ref="AuditAppender"/>
-    </logger>
-    <logger name="extra" level="INFO" additivity="false">
-        <appender-ref ref="ExtraAppender"/>
-    </logger>
-
-    <logger name="contract" level="INFO" additivity="false">
-        <appender-ref ref="ContractAppender"/>
-    </logger>
-
-    <logger name="repayment" level="INFO" additivity="false">
-        <appender-ref ref="RepaymentAppender"/>
-    </logger>
-
-    <logger name="card" level="INFO" additivity="false">
-        <appender-ref ref="CardAppender"/>
-    </logger>
-
-    <logger name="task-audit" level="INFO" additivity="false">
-        <appender-ref ref="TaskAuditAppender"/>
-    </logger>
-
-    <logger name="task-contract" level="INFO" additivity="false">
-        <appender-ref ref="TaskContractAppender"/>
-    </logger>
-
-    <logger name="360response" level="INFO" additivity="false">
-        <appender-ref ref="ResponseAppender"/>
-    </logger>
-
-    <logger name="asyncPush" level="INFO" additivity="false">
-        <appender-ref ref="PushAppender"/>
-    </logger>
-    <logger name="goodsOrder" level="INFO" additivity="false">
-        <appender-ref ref="GoodsOrderAppender"/>
-    </logger>
 
     <!--<logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"></logger>-->
-    <!--<logger name="com.naxia.statistic.mybatis.mapperpper" level="DEBUG"></logger>-->
 </configuration>

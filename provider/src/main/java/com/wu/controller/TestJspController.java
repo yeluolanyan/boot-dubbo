@@ -2,6 +2,8 @@ package com.wu.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,15 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by MJN on 2018/4/17.
  */
-@Api(value = "返回jsp相关接口",description = "返回jsp相关接口 ")
 @Controller
 @RequestMapping("/test")
 public class TestJspController {
-
-    @ApiOperation("测试index接口")
+    private static Logger logger = LoggerFactory.getLogger("test");
     @RequestMapping(value = "/index")
     public ModelAndView  test(){
         ModelAndView mv =new ModelAndView("/index");
+        logger.info("info ---------------------");
+        logger.error("error ---------------------");
         mv.addObject("index","abbbbbbbbbbbbbbbb");
         return mv;
     }

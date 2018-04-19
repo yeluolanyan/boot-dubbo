@@ -1,9 +1,12 @@
 package com.wu.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wu.dao.mapper.UserMapper;
 import com.wu.model.User;
 import com.wu.model.UserExample;
 import com.wu.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -17,6 +20,7 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService{
+    private static Logger logger = LoggerFactory.getLogger("user");
     @Autowired
     private UserMapper userMapper;
 
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> queryUserByName(String username){
+        logger.info("查询用户 userName={}", username);
         UserExample example = new UserExample();
         example.or().andUserNameEqualTo(username);
         return userMapper.selectByExample(example);
@@ -37,6 +42,8 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
     public Integer saveUser(User user){
+        logger.info(" 添加新用户 user = [{}]----userName={}", JSONObject.toJSON(user),user.getUserName());
+        logger.error(" 失败了error--------------------");
         return userMapper.insert(user);
     }
 }

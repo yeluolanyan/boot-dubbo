@@ -129,6 +129,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!--fast json-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
     </dependencies>
 
     <!-- 配置自己的maven仓库私服 -->
