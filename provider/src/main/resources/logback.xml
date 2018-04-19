@@ -73,7 +73,17 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
-
+    <!--Redis日志-->
+    <appender name="RedisAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}/redis.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
@@ -89,6 +99,11 @@
 
     <logger name="test" level="INFO" additivity="false">
         <appender-ref ref="TestAppender"/>
+        <appender-ref ref="INFO"/>
+    </logger>
+
+    <logger name="redis" level="INFO" additivity="false">
+        <appender-ref ref="RedisAppender"/>
         <appender-ref ref="INFO"/>
     </logger>
 
