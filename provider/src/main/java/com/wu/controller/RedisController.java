@@ -1,17 +1,12 @@
 package com.wu.controller;
 
 import com.wu.common.redis.RedisClient;
-import com.wu.model.User;
-import com.wu.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by MJN on 2018/4/16.

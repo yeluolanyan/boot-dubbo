@@ -3,10 +3,12 @@ package com.wu;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -19,12 +21,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
-@SpringBootApplication
+//如果不需要数据源 在@SpringBootApplication中排除其注入 否则启动会抛异常
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
 @EnableSwagger2
 @EnableAsync
 @EnableTransactionManagement //如果mybatis中service实现类中加入事务注解，需要此处添加该注解
 @EnableConfigurationProperties({})
-@PropertySource(value = {"classpath:application-prod.properties"})
+@PropertySource(value = {"classpath:application-dev.properties"})
 @ServletComponentScan
 @EnableScheduling
 public class SpringbootApplication {
@@ -32,7 +35,7 @@ public class SpringbootApplication {
 	private boolean swaggerShow;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootApplication.class, args);
+		ConfigurableApplicationContext run =SpringApplication.run(SpringbootApplication.class, args);
 	}
 
 	@Bean

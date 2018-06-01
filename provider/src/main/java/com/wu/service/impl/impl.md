@@ -1,0 +1,3 @@
+因为在spring+dubbo进行分布式项目搭建时，
+在面对被@Transactionnal()注解的事务服务时，dubbo是不能将其注册成服务者的。所以最好将dubbo服务与service层分开；
+dubbo层对外提供服务，service层可使用事务服务不相互影响

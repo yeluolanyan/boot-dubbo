@@ -3,15 +3,12 @@ package com.wu.controller;
 import com.wu.model.User;
 import com.wu.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController {
     private static Logger logger = LoggerFactory.getLogger("user");
-    @Autowired
+    /*@Autowired
     private UserService userService;
 
 
@@ -38,5 +35,5 @@ public class UserController {
     @RequestMapping(value = "saveUser",method = RequestMethod.POST)
     public Object queryByName(@RequestBody User user){
         return userService.saveUser(user);
-    }
+    }*/
 }

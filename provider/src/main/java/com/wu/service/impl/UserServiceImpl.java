@@ -18,8 +18,9 @@ import java.util.List;
 /**
  * Created by MJN on 2018/4/16.
  */
+//注意该注解是org.springframework.stereotype.Service
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private static Logger logger = LoggerFactory.getLogger("user");
     @Autowired
     private UserMapper userMapper;
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService{
         return userMapper.selectByExample(example);
     }
 
+    //在spring+dubbo进行分布式项目搭建时，在面对被@Transactionnal()注解的事务服务时，dubbo是不能将其注册成服务者的。
     //事务配置Propagation 事务传播行为，isolation 事务隔离级别设置，timeout 事务超时时间设置,rollbackFor 导致事务回滚的异常类数组
     @Override
     @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
