@@ -8,10 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ import java.util.List;
  * Created by MJN on 2018/4/19.
  */
 @Api(tags = "dubbo测试相关接口",description = "")
-@Controller
-@RequestMapping("/dubbo")
+@RestController
+@RequestMapping("/dubboController")
 public class DubboController {
 
     private static Logger logger = LoggerFactory.getLogger("dubbo");
-    @Reference
+    @Reference(version = "1.0.0")
     private DubboUserService dubboUserService;
 
     @ApiOperation("用户信息查询接口")

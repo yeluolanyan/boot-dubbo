@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by bysocket on 28/02/2017.
  */
 // 注册为 Dubbo 服务
-@Service
+@Service(version = "1.0.0")
 public class DubboCityServiceImpl implements DubboCityService {
     @Autowired
     private UserService userService;
